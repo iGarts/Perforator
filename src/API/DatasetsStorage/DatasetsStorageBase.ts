@@ -2,7 +2,7 @@ import { UploadDataModel } from "./UploadDataModel";
 import { RequestExecutorBase } from "../RequestExecutorBase";
 
 export class DatasetsStorageBase extends RequestExecutorBase{
-    protected static BaseRoute = "/api/datasets/v1";
+    protected static BaseRoute = "";
 
     protected static GenerateUploadRequestBody(
         referenceNumber: string,
