@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+
+    k6_agibank:
+        image: loadimpact/k6:latest
+        extra_hosts:
+          - "performancetest.credolab.com:20.85.195.232"
+        command: run --tag Subscription=Agibank --tag Build=__ENVIRONMENT__ --insecure-skip-tls-verify /scripts/br_agibank_load.js
+        volumes:
+          - ./scripts:/scripts:ro
+          - ./compresseddata:/compresseddata:ro
+        environment:
+          - K6_OUT=influxdb=http://172.16.0.4:8086/manual
+          - K6_INFLUXDB_USERNAME=admin
+          - K6_INFLUXDB_PASSWORD=password
+
+    k6_idf:
+        image: loadimpact/k6:latest
+        extra_hosts:
+          - "performancetest.credolab.com:20.85.195.232"
+        command: run --tag Subscription=IDF --tag Build=__ENVIRONMENT__ --insecure-skip-tls-verify /scripts/br_idf_load.js
+        volumes:
+          - ./scripts:/scripts:ro
+          - ./compresseddata:/compresseddata:ro
+        environment:
+          - K6_OUT=influxdb=http://172.16.0.4:8086/manual
+          - K6_INFLUXDB_USERNAME=admin
+          - K6_INFLUXDB_PASSWORD=password
+
+    k6_mobvista:
+        image: loadimpact/k6:latest
+        extra_hosts:
+          - "performancetest.credolab.com:20.85.195.232"
+        command: run --tag Subscription=MobvistaPeru --tag Build=__ENVIRONMENT__ --insecure-skip-tls-verify /scripts/br_mobvistaPeru_load.js
+        volumes:
+          - ./scripts:/scripts:ro
+          - ./compresseddata:/compresseddata:ro
+        environment:
+          - K6_OUT=influxdb=http://172.16.0.4:8086/manual
+          - K6_INFLUXDB_USERNAME=admin
+          - K6_INFLUXDB_PASSWORD=password
